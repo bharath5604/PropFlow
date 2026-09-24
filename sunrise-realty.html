@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sunrise Realty | Plots, villas, houses and flats in Hyderabad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14231C;
+    --paper: #FBF6EC;
+    --card: #FFFFFF;
+    --line: #E3D9C3;
+    --text: #46524A;
+    --muted: #7C8778;
+    --laurel: #276148;
+    --laurel-deep: #123023;
+    --laurel-soft: #DDEBE0;
+    --clay: #D9642E;
+    --clay-deep: #B84F20;
+    --marigold: #F2B134;
+    --sand: #F1E7D2;
+    --on-ink: #FBF6EC;
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #F1EEE2; --paper: #0D1510; --card: #151F18; --line: #29362B;
+      --text: #C8D0C2; --muted: #8CA087; --laurel: #63A585; --laurel-deep: #4E8B6C;
+      --laurel-soft: #1B2A20; --clay: #E97B45; --clay-deep: #F2946A; --marigold: #F2BE4E;
+      --sand: #1C2620; --on-ink: #0D1510;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #F1EEE2; --paper: #0D1510; --card: #151F18; --line: #29362B;
+    --text: #C8D0C2; --muted: #8CA087; --laurel: #63A585; --laurel-deep: #4E8B6C;
+    --laurel-soft: #1B2A20; --clay: #E97B45; --clay-deep: #F2946A; --marigold: #F2BE4E;
+    --sand: #1C2620; --on-ink: #0D1510;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--text);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+    background-image:
+      radial-gradient(900px 560px at 92% -10%, color-mix(in srgb, var(--marigold) 26%, transparent), transparent 60%),
+      radial-gradient(760px 520px at -6% 12%, var(--laurel-soft), transparent 62%);
+    background-repeat: no-repeat;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--clay); outline-offset: 3px; }
+  .wrap { width: min(1160px, 100% - 44px); margin-inline: auto; }
+  img, svg { max-width: 100%; }
+  ::selection { background: var(--marigold); color: var(--laurel-deep); }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .in { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+  .in-1 { animation-delay: .02s; } .in-2 { animation-delay: .12s; } .in-3 { animation-delay: .22s; } .in-4 { animation-delay: .32s; }
+
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.shown { opacity: 1; transform: translateY(0); }
+
+  .mobile-cta { display: none; }
+  @media (max-width: 640px) {
+    .mobile-cta {
+      display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+      background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(10px);
+      border-top: 1px solid var(--line);
+    }
+    .mobile-cta .btn { width: 100%; justify-content: center; }
+    main { padding-bottom: 76px; }
+  }
+
+  /* ---- header ---- */
+  header { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--paper) 82%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; }
+  .brand { font-family: var(--font-display); font-weight: 700; font-size: 23px; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+  .brand .mark { width: 32px; height: 32px; border-radius: 9px; background: linear-gradient(145deg, var(--clay), var(--marigold)); display: grid; place-items: center; flex: none; }
+  .brand .mark svg { width: 18px; height: 18px; }
+  nav { display: flex; align-items: center; gap: 30px; }
+  nav a.link { position: relative; text-decoration: none; font-weight: 500; font-size: 15.5px; color: var(--text); padding-bottom: 3px; }
+  nav a.link::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 2px; background: var(--clay); transition: right .22s ease; }
+  nav a.link:hover { color: var(--ink); }
+  nav a.link:hover::after { right: 0; }
+
+  .btn { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; cursor: pointer; background: var(--clay); color: #fff; font: 700 16px/1 var(--font-body); padding: 16px 26px; border-radius: 999px; border: 0; transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--clay) 65%, transparent); }
+  .btn:hover { filter: brightness(1.06); transform: translateY(-2px); box-shadow: 0 16px 30px -10px color-mix(in srgb, var(--clay) 70%, transparent); }
+  .btn svg { width: 17px; height: 17px; transition: transform .18s ease; }
+  .btn:hover svg { transform: translateX(3px); }
+  .btn.on-ink { background: var(--marigold); color: var(--laurel-deep); box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--marigold) 55%, transparent); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); box-shadow: none; }
+  .btn.ghost:hover { border-color: var(--laurel); transform: none; }
+  .btn.small { padding: 11px 18px; font-size: 14.5px; }
+
+  /* ---- hero ---- */
+  .hero { padding: 70px 0 40px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 44px; align-items: center; }
+  .kicker { display: inline-flex; align-items: center; gap: 8px; font: 700 13px/1 var(--font-body); letter-spacing: .09em; text-transform: uppercase; color: var(--laurel-deep); background: var(--laurel-soft); padding: 10px 16px; border-radius: 999px; margin-bottom: 26px; }
+  .kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--clay); }
+  h1 { font-family: var(--font-display); font-weight: 700; color: var(--ink); font-size: clamp(40px, 5vw, 62px); line-height: 1.03; letter-spacing: -0.025em; margin: 0 0 22px; }
+  h1 .hl { font-style: italic; font-weight: 600; color: var(--clay); position: relative; white-space: nowrap; }
+  .lede { font-size: 19.5px; max-width: 50ch; margin: 0 0 34px; color: var(--text); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .note { font-size: 14.5px; color: var(--muted); margin-top: 18px; }
+
+  .trust { display: flex; flex-wrap: wrap; gap: 36px; margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .trust div { display: flex; flex-direction: column; gap: 2px; }
+  .trust b { font-family: var(--font-display); font-size: 30px; color: var(--ink); font-weight: 700; }
+  .trust span { font-size: 13.5px; color: var(--muted); }
+
+  /* hero visual: layered skyline / plot art */
+  .visual { position: relative; }
+  .stage { position: relative; border-radius: 26px; overflow: hidden; background: linear-gradient(160deg, var(--laurel-deep), var(--laurel) 70%); aspect-ratio: 1/1.05; box-shadow: 0 30px 60px -24px color-mix(in srgb, var(--laurel-deep) 60%, transparent); }
+  .stage svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .float-card { position: absolute; background: var(--card); border-radius: 16px; padding: 16px 18px; box-shadow: 0 20px 40px -16px rgba(0,0,0,.35); display: flex; align-items: center; gap: 12px; }
+  .float-card .ic { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; flex: none; }
+  .float-card .ic svg { width: 20px; height: 20px; }
+  .float-card b { display: block; font-family: var(--font-display); font-size: 16px; color: var(--ink); font-weight: 700; }
+  .float-card span { font-size: 12.5px; color: var(--muted); }
+  .fc-1 { top: 8%; left: -8%; }
+  .fc-1 .ic { background: var(--sand); }
+  .fc-1 .ic svg { stroke: var(--clay-deep); }
+  .fc-2 { bottom: 9%; right: -7%; }
+  .fc-2 .ic { background: var(--laurel-soft); }
+  .fc-2 .ic svg { stroke: var(--laurel-deep); }
+
+  /* ---- categories ---- */
+  .categories { padding: 76px 0 88px; }
+  .head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+  .eyebrow { font: 700 13px/1 var(--font-body); letter-spacing: .09em; text-transform: uppercase; color: var(--laurel); margin: 0 0 14px; }
+  h2 { font-family: var(--font-display); font-weight: 700; color: var(--ink); font-size: clamp(30px, 3.6vw, 42px); letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 14px; }
+  .head p { font-size: 17px; margin: 0; }
+
+  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .cat { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 30px 24px 26px; text-align: left; text-decoration: none; display: flex; flex-direction: column; gap: 16px; overflow: hidden; transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
+  .cat::after { content: ""; position: absolute; inset: 0; background: linear-gradient(145deg, transparent 55%, var(--sw, var(--laurel-soft)) 150%); opacity: 0; transition: opacity .2s ease; }
+  .cat:hover { border-color: transparent; transform: translateY(-5px); box-shadow: 0 22px 40px -22px color-mix(in srgb, var(--ink) 35%, transparent); }
+  .cat:hover::after { opacity: 1; }
+  .cat .icon { position: relative; width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; background: var(--bg, var(--laurel-soft)); }
+  .cat .icon svg { width: 27px; height: 27px; stroke: var(--fg, var(--laurel-deep)); }
+  .cat h3 { position: relative; font-family: var(--font-display); font-size: 21px; color: var(--ink); margin: 0; font-weight: 700; }
+  .cat p { position: relative; font-size: 14.5px; color: var(--muted); margin: 0; line-height: 1.5; }
+  .cat .go { position: relative; margin-top: auto; font-size: 14px; font-weight: 700; color: var(--fg, var(--laurel-deep)); display: flex; align-items: center; gap: 6px; }
+  .cat .go svg { width: 15px; height: 15px; transition: transform .18s ease; }
+  .cat:hover .go svg { transform: translateX(4px); }
+
+  .cat.c1 { --bg: #FCE8DC; --fg: var(--clay-deep); --sw: #FCE8DC; }
+  .cat.c2 { --bg: var(--laurel-soft); --fg: var(--laurel-deep); --sw: var(--laurel-soft); }
+  .cat.c3 { --bg: #FBF0D2; --fg: #96700F; --sw: #FBF0D2; }
+  .cat.c4 { --bg: #E6E9FA; --fg: #45529E; --sw: #E6E9FA; }
+
+  /* ---- how it works ---- */
+  .how { padding: 8px 0 96px; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; position: relative; }
+  .step { position: relative; padding: 30px 26px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; }
+  .step .num { font-family: var(--font-display); font-size: 42px; font-weight: 700; color: transparent; -webkit-text-stroke: 1.5px var(--laurel); line-height: 1; margin-bottom: 18px; }
+  .step h3 { font-family: var(--font-display); font-size: 19px; color: var(--ink); margin: 0 0 8px; font-weight: 700; }
+  .step p { font-size: 15px; margin: 0; }
+
+  /* ---- form band ---- */
+  .band { position: relative; overflow: hidden; background: var(--laurel-deep); color: var(--on-ink); border-radius: 30px; margin: 0 auto 96px; width: min(1160px, 100% - 44px); }
+  .band::before { content: ""; position: absolute; inset: 0; background:
+      radial-gradient(560px 380px at 92% -10%, color-mix(in srgb, var(--marigold) 40%, transparent), transparent 68%),
+      radial-gradient(420px 320px at 0% 110%, color-mix(in srgb, var(--clay) 30%, transparent), transparent 65%); }
+  .band-in { position: relative; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; padding: 68px 58px; }
+  .band .eyebrow { color: var(--marigold); }
+  .band h2 { color: var(--on-ink); font-size: clamp(28px, 3.4vw, 38px); }
+  .band p.desc { margin: 0 0 32px; opacity: .82; max-width: 46ch; font-size: 16.5px; }
+  .band ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 15px; }
+  .band li { display: flex; align-items: flex-start; gap: 12px; font-size: 15.5px; opacity: .94; }
+  .band li svg { width: 21px; height: 21px; flex: none; margin-top: 2px; stroke: var(--marigold); }
+  .band-note { font-size: 13.5px; opacity: .65; margin: 14px 0 0; }
+
+  /* ---- why us ---- */
+  .why { padding: 8px 0 96px; }
+  .why-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 52px; align-items: start; }
+  .why-copy h2 { max-width: 12ch; }
+  .why-copy p { font-size: 16.5px; max-width: 34ch; }
+  .why-list { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 32px; }
+  .why-item { display: flex; gap: 16px; }
+  .why-item .icon { width: 44px; height: 44px; border-radius: 12px; background: var(--laurel-soft); display: grid; place-items: center; flex: none; }
+  .why-item .icon svg { width: 22px; height: 22px; stroke: var(--laurel-deep); }
+  .why-item h3 { font-family: var(--font-display); font-size: 17px; color: var(--ink); margin: 0 0 5px; font-weight: 700; }
+  .why-item p { font-size: 14.5px; color: var(--muted); margin: 0; line-height: 1.5; }
+
+  /* ---- testimonials ---- */
+  .testimonials { padding: 8px 0 96px; }
+  .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .test-card { position: relative; margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px 26px 28px; display: flex; flex-direction: column; gap: 22px; overflow: hidden; }
+  .test-card::before { content: "\201C"; position: absolute; top: -6px; right: 18px; font-family: var(--font-display); font-size: 96px; font-weight: 700; color: var(--laurel-soft); line-height: 1; z-index: 0; }
+  .test-card blockquote { position: relative; z-index: 1; margin: 0; font-family: var(--font-display); font-size: 17px; color: var(--ink); font-weight: 500; line-height: 1.5; }
+  .test-card figcaption { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+  .test-card figcaption b { display: block; font-size: 14.5px; color: var(--ink); }
+  .test-card figcaption span { font-size: 13px; color: var(--muted); }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--c, var(--laurel)); color: #fff; display: grid; place-items: center; font: 700 13px var(--font-body); flex: none; }
+
+  footer { padding: 76px 0 0; background: var(--sand); margin-top: 8px; }
+  .foot-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 40px; padding-bottom: 44px; }
+  .foot-brand p { font-size: 14.5px; color: var(--muted); max-width: 32ch; margin: 14px 0 0; }
+  .foot-col h4 { font-family: var(--font-display); font-size: 15px; color: var(--ink); margin: 0 0 16px; font-weight: 700; }
+  .foot-col a, .foot-col span { display: block; text-decoration: none; font-size: 14.5px; color: var(--muted); margin-bottom: 11px; }
+  .foot-col a:hover { color: var(--laurel-deep); }
+  .foot-in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; padding: 28px 0 32px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--muted); }
+
+  @media (max-width: 980px) {
+    .hero { grid-template-columns: 1fr; }
+    .visual { order: -1; max-width: 420px; margin: 0 auto; }
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: 1fr; }
+    .band-in { grid-template-columns: 1fr; padding: 46px 30px; }
+    .fc-1, .fc-2 { display: none; }
+    .why-grid { grid-template-columns: 1fr; gap: 36px; }
+    .test-grid { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    nav a.link { display: none; }
+    .cat-grid { grid-template-columns: 1fr; }
+    .trust { gap: 26px; }
+    .why-list { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top" id="top">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg></span>
+      Sunrise Realty
+    </a>
+    <nav>
+      <a class="link" href="#categories">What we offer</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="btn small" href="#enquire-form">Enquire now</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div>
+      <span class="kicker in in-1">📍 Hyderabad &amp; surrounding areas</span>
+      <h1 class="in in-2">Whatever you're looking to buy, <span class="hl">we probably have it.</span></h1>
+      <p class="lede in in-3">Plots, villas, independent houses or flats — tell us your budget, preferred area and timeline, and we'll match you with the right property and get back to you personally.</p>
+      <div class="cta-row in in-4">
+        <a class="btn" href="#enquire-form">Tell us what you're looking for
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn ghost" href="#categories">See what we deal in</a>
+      </div>
+      <p class="note in in-4">Takes under a minute · No documents needed to enquire</p>
+
+      <div class="trust in in-4">
+        <div><b>12+ yrs</b><span>Serving Hyderabad buyers</span></div>
+        <div><b>4 types</b><span>Plots, villas, houses, flats</span></div>
+        <div><b>&lt; 1 day</b><span>Typical response time</span></div>
+      </div>
+    </div>
+
+    <div class="visual in in-2">
+      <div class="stage">
+        <svg viewBox="0 0 420 440" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3F7E60"/>
+              <stop offset="1" stop-color="#123023"/>
+            </linearGradient>
+          </defs>
+          <rect width="420" height="440" fill="url(#sky)"/>
+          <circle cx="330" cy="70" r="46" fill="#F2B134" opacity="0.9"/>
+          <!-- distant skyline -->
+          <g opacity="0.55" fill="#0F2A1F">
+            <rect x="10" y="230" width="30" height="120"/>
+            <rect x="46" y="200" width="26" height="150"/>
+            <rect x="78" y="245" width="34" height="105"/>
+            <rect x="340" y="210" width="28" height="140"/>
+            <rect x="374" y="240" width="30" height="110"/>
+          </g>
+          <!-- hero building cluster -->
+          <g>
+            <rect x="120" y="150" width="90" height="200" rx="4" fill="#FBF6EC"/>
+            <rect x="222" y="190" width="72" height="160" rx="4" fill="#F1E7D2"/>
+            <g fill="#D9642E">
+              <rect x="134" y="168" width="16" height="16" rx="2"/>
+              <rect x="160" y="168" width="16" height="16" rx="2"/>
+              <rect x="186" y="168" width="16" height="16" rx="2"/>
+              <rect x="134" y="196" width="16" height="16" rx="2"/>
+              <rect x="186" y="196" width="16" height="16" rx="2"/>
+              <rect x="134" y="224" width="16" height="16" rx="2"/>
+              <rect x="160" y="224" width="16" height="16" rx="2"/>
+              <rect x="186" y="224" width="16" height="16" rx="2"/>
+              <rect x="234" y="206" width="14" height="14" rx="2"/>
+              <rect x="256" y="206" width="14" height="14" rx="2"/>
+              <rect x="234" y="232" width="14" height="14" rx="2"/>
+              <rect x="256" y="232" width="14" height="14" rx="2"/>
+            </g>
+            <rect x="158" y="300" width="34" height="50" rx="2" fill="#276148"/>
+          </g>
+          <!-- plot grid strip -->
+          <g transform="translate(0,364)">
+            <rect width="420" height="76" fill="#0F2A1F"/>
+            <g fill="#3F7E60" opacity="0.9">
+              <rect x="16" y="14" width="42" height="48" rx="3"/>
+              <rect x="66" y="14" width="42" height="48" rx="3"/>
+              <rect x="116" y="14" width="42" height="48" rx="3" fill="#F2B134"/>
+              <rect x="166" y="14" width="42" height="48" rx="3"/>
+              <rect x="216" y="14" width="42" height="48" rx="3"/>
+              <rect x="266" y="14" width="42" height="48" rx="3" fill="#F2B134"/>
+              <rect x="316" y="14" width="42" height="48" rx="3"/>
+              <rect x="366" y="14" width="38" height="48" rx="3"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="float-card fc-1">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 8v13h18V8z"/><path d="M9 21v-7h6v7"/></svg></div>
+        <div><b>240+</b><span>Plots &amp; homes sold</span></div>
+      </div>
+      <div class="float-card fc-2">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <div><b>RERA</b><span>Verified properties</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap categories reveal" id="categories">
+    <div class="head">
+      <p class="eyebrow">What we deal in</p>
+      <h2>One enquiry, every kind of property</h2>
+      <p>We don't limit you to a fixed listing. Tell us the category and we'll search our network for a match.</p>
+    </div>
+
+    <div class="cat-grid">
+      <a class="cat c1" href="#enquire-form">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-6 9 6v11a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></div>
+        <h3>Open plots</h3>
+        <p>HMDA and RERA approved plots in gated and open layouts.</p>
+        <span class="go">Enquire about plots <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+
+      <a class="cat c2" href="#enquire-form">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V11l8-6 8 6v10"/><path d="M9 21v-7h6v7"/></svg></div>
+        <h3>Villas</h3>
+        <p>Standalone and gated-community villas with private outdoor space.</p>
+        <span class="go">Enquire about villas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+
+      <a class="cat c3" href="#enquire-form">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 11h.01M15 11h.01M9 15h.01M15 15h.01"/></svg></div>
+        <h3>Independent houses</h3>
+        <p>Individual homes on their own plot, ready to move or under construction.</p>
+        <span class="go">Enquire about houses <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+
+      <a class="cat c4" href="#enquire-form">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 8h1M14 8h1M9 12h1M14 12h1M9 16h6"/></svg></div>
+        <h3>Flats &amp; apartments</h3>
+        <p>1, 2 and 3 BHK apartments across Hyderabad's growth corridors.</p>
+        <span class="go">Enquire about flats <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap how reveal" id="how">
+    <div class="head">
+      <p class="eyebrow">How it works</p>
+      <h2>Three steps to your shortlist</h2>
+      <p>No sign-up, no back-and-forth forms. Just tell us once.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Share what you need</h3>
+        <p>Property type, budget, preferred area and when you want to move — in your own words.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>We match it</h3>
+        <p>Our team checks it against current listings and our broker network for a genuine fit.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>We reach out</h3>
+        <p>You'll hear from us with options and can book a site visit whenever you're ready.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap why reveal">
+    <div class="why-grid">
+      <div class="why-copy">
+        <p class="eyebrow">Why buyers choose us</p>
+        <h2>Local knowledge, honest advice</h2>
+        <p>We've walked these plots and toured these buildings ourselves. Every recommendation comes from someone who actually knows the area, not a database.</p>
+      </div>
+      <div class="why-list">
+        <div class="why-item">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5M3 17l9 5 9-5"/></svg></div>
+          <div><h3>RERA-checked, every time</h3><p>We verify titles and approvals before a property ever reaches you.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+          <div><h3>One point of contact</h3><p>The same person guides you from first reply through to site visit.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11a8 8 0 0 1 16 0c0 6.5-8 11-8 11z"/><circle cx="12" cy="11" r="3"/></svg></div>
+          <div><h3>Hyperlocal reach</h3><p>Off-market plots and pre-launch flats we hear about before portals do.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <div><h3>No pushy follow-ups</h3><p>We reach out once with real options. You lead the pace after that.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap testimonials reveal">
+    <div class="head">
+      <p class="eyebrow">From recent buyers</p>
+      <h2>What it's like working with us</h2>
+    </div>
+    <div class="test-grid">
+      <figure class="test-card">
+        <blockquote>"We told them our budget and the area we liked, and within a day we had three real options to compare, not a generic list."</blockquote>
+        <figcaption><span class="avatar" style="--c:var(--clay)">AR</span><div><b>Anitha R.</b><span>Bought a villa in Kokapet</span></div></figcaption>
+      </figure>
+      <figure class="test-card">
+        <blockquote>"No pressure at any point. They understood we were in no rush and just kept us posted when something matching our plot search came up."</blockquote>
+        <figcaption><span class="avatar" style="--c:var(--laurel)">SK</span><div><b>Suresh K.</b><span>Bought a plot near Shamshabad</span></div></figcaption>
+      </figure>
+      <figure class="test-card">
+        <blockquote>"Everything from the enquiry to the site visit felt organized. It didn't feel like dealing with a typical broker."</blockquote>
+        <figcaption><span class="avatar" style="--c:var(--marigold)">PN</span><div><b>Priya N.</b><span>Bought a flat in Gachibowli</span></div></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="band-in">
+      <div>
+        <p class="eyebrow">Ready when you are</p>
+        <h2>Tell us what you're looking for</h2>
+        <p class="desc">One short form. No pressure, no spam — just a real response from a real person on our team.</p>
+        <a class="btn on-ink" href="#enquire-form">Open the enquiry form
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <p class="band-note">Takes under a minute · no documents needed</p>
+      </div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Works for plots, villas, houses or flats</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Any budget, any timeline</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Typical reply within a day</li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="wrap form-section reveal" id="enquire-form">
+    <div class="head">
+      <p class="eyebrow">Enquire now</p>
+      <h2>Tell us what you're looking for</h2>
+      <p>Fill it in below — it goes straight to our team.</p>
+    </div>
+
+    <form class="lead-form" id="leadForm" novalidate>
+      <div class="f-row">
+        <div class="f-field">
+          <label for="f-name">Your name</label>
+          <input type="text" id="f-name" name="name" required autocomplete="name" placeholder="e.g. Ravi Kumar">
+        </div>
+        <div class="f-field">
+          <label for="f-contact">Phone or email</label>
+          <input type="text" id="f-contact" name="contact" required autocomplete="tel" placeholder="e.g. 98765 43210">
+        </div>
+      </div>
+
+      <div class="f-field">
+        <label>What are you looking for?</label>
+        <div class="pill-group" role="radiogroup" aria-label="Property type">
+          <input type="radio" name="propertyType" id="pt-plot" value="Open plot" checked><label for="pt-plot" class="pill">Plot</label>
+          <input type="radio" name="propertyType" id="pt-villa" value="Villa"><label for="pt-villa" class="pill">Villa</label>
+          <input type="radio" name="propertyType" id="pt-house" value="Independent house"><label for="pt-house" class="pill">House</label>
+          <input type="radio" name="propertyType" id="pt-flat" value="Flat / apartment"><label for="pt-flat" class="pill">Flat</label>
+          <input type="radio" name="propertyType" id="pt-unsure" value="Not sure yet"><label for="pt-unsure" class="pill">Not sure yet</label>
+        </div>
+      </div>
+
+      <div class="f-field">
+        <label for="f-message">Tell us more</label>
+        <textarea id="f-message" name="message" rows="4" required placeholder="Budget, preferred area, and when you'd like to move — e.g. &quot;Looking to buy a plot near Gandipet, budget around 2 crore, within 3 months.&quot;"></textarea>
+      </div>
+
+      <button type="submit" class="btn submit-btn" id="submitBtn">
+        <span class="btn-label">Send enquiry</span>
+        <svg class="spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" hidden><path d="M12 2v4M12 18v4M4.9 4.9l2.9 2.9M16.2 16.2l2.9 2.9M2 12h4M18 12h4M4.9 19.1l2.9-2.9M16.2 7.8l2.9-2.9"/></svg>
+      </button>
+
+      <p class="f-status" id="formStatus" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+</main>
+
+<style>
+  .form-section { padding: 8px 0 96px; }
+  .lead-form { max-width: 640px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 36px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 26px 54px -30px color-mix(in srgb, var(--ink) 30%, transparent); }
+  .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .f-field { display: flex; flex-direction: column; gap: 8px; }
+  .f-field label { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .f-field input, .f-field select, .f-field textarea {
+    font: 500 15.5px/1.4 var(--font-body); color: var(--ink); background: var(--paper);
+    border: 1.5px solid var(--line); border-radius: 11px; padding: 13px 15px; resize: vertical;
+  }
+  .f-field input:focus, .f-field select:focus, .f-field textarea:focus { outline: none; border-color: var(--laurel); }
+  .pill-group { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pill-group input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .pill-group .pill {
+    cursor: pointer; font: 600 14.5px/1 var(--font-body); padding: 11px 18px; border-radius: 999px;
+    border: 1.5px solid var(--line); background: var(--paper); color: var(--text); transition: all .15s ease;
+  }
+  .pill-group input:checked + .pill { background: var(--laurel); border-color: var(--laurel); color: #fff; }
+  .pill-group input:focus-visible + .pill { outline: 3px solid var(--clay); outline-offset: 2px; }
+  .pill-group .pill:hover { border-color: var(--laurel); }
+  .submit-btn { justify-content: center; width: 100%; }
+  .submit-btn:disabled { opacity: .7; cursor: default; transform: none; }
+  .spin { width: 18px; height: 18px; animation: spin 0.9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .f-status { margin: 0; font-size: 14.5px; text-align: center; min-height: 20px; }
+  .f-status.ok { color: var(--laurel-deep); font-weight: 600; }
+  .f-status.err { color: var(--clay-deep); font-weight: 600; }
+  @media (max-width: 640px) { .f-row { grid-template-columns: 1fr; } .lead-form { padding: 26px 22px; } }
+</style>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <a class="brand" href="#top">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg></span>
+        Sunrise Realty
+      </a>
+      <p>Helping Hyderabad buyers find plots, villas, houses and flats since 2013.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Explore</h4>
+      <a href="#categories">What we offer</a>
+      <a href="#how">How it works</a>
+      <a href="#enquire-form">Enquire now</a>
+    </div>
+    <div class="foot-col">
+      <h4>Areas we cover</h4>
+      <span>Gachibowli &amp; Kokapet</span>
+      <span>Shamshabad &amp; Kollur</span>
+      <span>Madhapur &amp; Miyapur</span>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <span>Sunrise Realty is a demo brand used to showcase an enquiry workflow.</span>
+    <span>Hyderabad, Telangana</span>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="btn" href="#enquire-form">Enquire now
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>
+
+<script>
+  // ── SET THIS to your n8n Production webhook URL ──
+  // Example: "https://your-domain.com/webhook/abc123-def456"
+  // Get it from: n8n → your workflow → Webhook node → "Production URL" tab
+  var N8N_WEBHOOK_URL = "https://fisheries-civilian-lil-apr.trycloudflare.com/webhook/7c71316e-2852-4fe6-b5f9-980036bff7bb";
+
+  var form = document.getElementById("leadForm");
+  var btn = document.getElementById("submitBtn");
+  var btnLabel = btn.querySelector(".btn-label");
+  var spinner = btn.querySelector(".spin");
+  var status = document.getElementById("formStatus");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    var typeInput = form.querySelector('input[name="propertyType"]:checked');
+    var payload = {
+      name: document.getElementById("f-name").value.trim(),
+      contact: document.getElementById("f-contact").value.trim(),
+      propertyType: typeInput ? typeInput.value : "Not sure yet",
+      message: document.getElementById("f-message").value.trim()
+    };
+
+    if (!payload.name || !payload.contact || !payload.message) {
+      status.textContent = "Please fill in your name, contact and what you're looking for.";
+      status.className = "f-status err";
+      return;
+    }
+
+    btn.disabled = true;
+    btnLabel.textContent = "Sending…";
+    spinner.hidden = false;
+    status.textContent = "";
+    status.className = "f-status";
+
+    fetch(N8N_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error("Request failed: " + res.status);
+        form.reset();
+        status.textContent = "Thanks! We've received your enquiry and will be in touch shortly.";
+        status.className = "f-status ok";
+      })
+      .catch(function (err) {
+        console.error(err);
+        status.textContent = "Something went wrong sending that. Please try again in a moment.";
+        status.className = "f-status err";
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btnLabel.textContent = "Send enquiry";
+        spinner.hidden = true;
+      });
+  });
+
+  // Scroll-reveal for section entrances
+  var revealTargets = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && revealTargets.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("shown");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealTargets.forEach(function (el) { io.observe(el); });
+  } else {
+    revealTargets.forEach(function (el) { el.classList.add("shown"); });
+  }
+</script>
+</body>
+</html>
